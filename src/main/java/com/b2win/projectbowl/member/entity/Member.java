@@ -11,7 +11,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-@Setter
 @Entity
 public class Member {
 
@@ -34,10 +33,10 @@ public class Member {
     @Column(nullable = false)
     private Gender gender;
 
-
     @Column(nullable = false, updatable = false, unique = true)
     private String Id;
 
+    @Setter
     @Column(length = 300, nullable = false)
     private String password;
 
@@ -47,22 +46,27 @@ public class Member {
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    private List<String> roles = new ArrayList<>();
 
+    @Builder
+    public Member(Long memberId, String name, LocalDate birthDate, Gender gender, String id, String password, String email) {
+        this.memberId = memberId;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.Id = id;
+        this.password = password;
+        this.email = email;
+    }
+
     public static Member toSaveMember(MemberDto.Post requestBody) {
-        if (requestBody == null) {
-            return null;
-        }
 
-        Member member = new Member();
-        member.setName(requestBody.getName());
-        member.setBirthDate(requestBody.getBirthDate());
-        member.setGender(requestBody.getGender());
-        member.setId(requestBody.getId());
-        member.setPassword(requestBody.getPassword());
-        if (requestBody.getEmail() != null) {
-            member.setEmail(requestBody.getEmail());
-        } else member.setEmail(null);
-
-        return member;
+        return Member.builder()
+                    .name(requestBody.getName())
+                    .birthDate(requestBody.getBirthDate())
+                    .gender(requestBody.getGender())
+                    .id(requestBody.getId())
+                    .password(requestBody.getPassword())
+                    .email(requestBody.getEmail())
+                    .build();
 
     }
 
