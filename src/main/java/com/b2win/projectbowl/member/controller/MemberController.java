@@ -29,9 +29,7 @@ public class MemberController {
         Member createdMember = memberService.createMember(member);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
-        String message = "회원가입에 성공했습니다.";
-
-        return ResponseEntity.created(location).body(message);
+        return ResponseEntity.created(location).body("회원가입에 성공했습니다.");
     }
 
 }
