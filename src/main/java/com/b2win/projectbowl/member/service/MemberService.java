@@ -22,10 +22,6 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
-        // 추가: User Role DB에 저장
-//        List<String> roles = authorityUtils.createRoles(member.getEmail());
-//        member.setRoles(roles);
-
         Member savedMember = memberRepository.save(member);
 
 
