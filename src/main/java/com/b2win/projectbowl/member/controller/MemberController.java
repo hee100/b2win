@@ -25,7 +25,7 @@ public class MemberController {
 
     @PostMapping("/members")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
-        Member member = Member.toSaveMember(requestBody);
+        Member member = Member.fromDto(requestBody);
         Member createdMember = memberService.createMember(member);
         URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, createdMember.getMemberId());
 
