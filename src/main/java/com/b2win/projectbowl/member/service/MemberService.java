@@ -1,5 +1,7 @@
 package com.b2win.projectbowl.member.service;
 
+import com.b2win.projectbowl.exception.BusinessLogicException;
+import com.b2win.projectbowl.exception.ExceptionCode;
 import com.b2win.projectbowl.member.entity.Member;
 import com.b2win.projectbowl.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
     public Member createMember(Member member) {
-//        verifyExistsEmail(member.getEmail());
+        verifyExistsEmail(member.getId());
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
@@ -28,6 +30,12 @@ public class MemberService {
 
 
         return savedMember;
+    }
+
+    private void verifyExistsEmail(String userId) {
+        Optional<Member> member = memberRepository.findByUserId(userId);
+        if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 
 }
