@@ -36,7 +36,7 @@ class MemberServiceTest {
                 .email("test@naver.com")
                 .build();
 
-        given(memberRepository.findByUserId(Mockito.any())).willReturn(Optional.of(member));
+        given(memberRepository.findById(Mockito.anyString())).willReturn(Optional.of(member));
         assertThrows(BusinessLogicException.class, () -> memberService.createMember(member));
     }
 

@@ -33,7 +33,7 @@ public class MemberService {
     }
 
     private void verifyExistsEmail(String userId) {
-        Optional<Member> member = memberRepository.findByUserId(userId);
+        Optional<Member> member = memberRepository.findById(userId);
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }

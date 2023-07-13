@@ -34,7 +34,7 @@ public class Member {
     private Gender gender;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private String Id;
+    private String id;
 
     @Setter
     @Column(length = 300, nullable = false)
@@ -52,12 +52,12 @@ public class Member {
         this.name = name;
         this.birthDate = birthDate;
         this.gender = gender;
-        this.Id = id;
+        this.id = id;
         this.password = password;
         this.email = email;
     }
 
-    public static Member toSaveMember(MemberDto.Post requestBody) {
+    public static Member fromDto(MemberDto.Post requestBody) {
 
         return Member.builder()
                     .name(requestBody.getName())
